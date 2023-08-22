@@ -2,6 +2,7 @@ import requests
 from lxml import html
 import re
 import pandas as pd
+import os
 
 
 
@@ -11,7 +12,7 @@ def get_data_url(url):
     tree = html.fromstring(response.content)
 
     urls = tree.xpath('//div[@class="span4"]//a/@href')
-    print(urls)
+   
     data = []
 
     for relative_url in urls:
@@ -72,6 +73,12 @@ if __name__ == "__main__":
 
     url = "https://vandal.elespanol.com/analisis/videojuegos"
 
-    df= get_data_url(url)
+    df = get_data_url(url)
 
-    df.to_csv("resultados.csv", sep="\t", encoding="utf-8-sig", index=False)
+    folder_name = "datos"
+    if not os.path.exists(folder_name):
+        os.makedirs(folder_name)
+
+    csv_file_path = os.path.join(folder_name, "resultados.csv")
+
+    df.to_csv(csv_file_path, sep="\t", encoding="utf-8-sig", index=False)
