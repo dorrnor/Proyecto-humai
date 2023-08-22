@@ -17,8 +17,7 @@ for relative_url in urls:
     if response.status_code == 200:
         inner_tree = html.fromstring(response.content)
         
-        # Aquí puedes utilizar inner_tree y XPath para extraer los datos que necesitas
-        # Por ejemplo:
+       
         title = inner_tree.xpath('//div[@class="titulojuego"]/a/text()')
         print("Título:", title)
         score = inner_tree.xpath('//*[@id="globalwrap"]/div[4]/article/div/div[3]/div/div[1]/div[1]/div[2]/text()')
@@ -37,7 +36,6 @@ for relative_url in urls:
             price_text = price_element[0]
             price_text_cleaned = price_text.replace("Precio:", "").strip().replace("€", "").replace(",", "")
             
-            # Eliminar otros caracteres no numéricos y el punto decimal adicional
             price_number = ''.join(filter(lambda x: x.isdigit() or x == ".", price_text_cleaned))
             
             if price_number:
