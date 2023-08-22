@@ -30,6 +30,9 @@ for relative_url in urls:
 
         version = inner_tree.xpath('//div[1]/h3[@class="h3ficha"]/b/text()')[0]
         print("Ficha técnica de la versión:",version)
+        analysis = inner_tree.xpath('//div[@class="textart"]//p/text()')
+        analysis_text = ' '.join(analysis)
+        print("Análisis:", analysis_text)
 
 
         price_element = inner_tree.xpath('//div[@class="fichatecnica"]//li[starts-with(., "Precio")]/text()')
