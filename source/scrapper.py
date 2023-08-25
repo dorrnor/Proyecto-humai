@@ -35,6 +35,8 @@ def get_data_url(url):
             positive_count = len(Positive_points)
             negative_count = len(negative_points)
             price_element = inner_tree.xpath('//div[@class="fichatecnica"]//li[starts-with(., "Precio")]/text()')
+            genero = inner_tree.xpath('//div[@class="mt1 tcenter t11"]/a/text()')
+
             if price_element:
                 price_text = price_element[0]
                 price_text_cleaned = clean_price_text(price_text)
@@ -44,6 +46,7 @@ def get_data_url(url):
 
             data.append({
                 "Titulo": title,
+                "Genero":genero,
                 "Puntaje": score,
                 "Comentarios positivos":positive_count,
                 "Comentarios negativos":negative_count,
