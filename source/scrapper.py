@@ -36,6 +36,9 @@ def get_data_url(url):
             negative_count = len(negative_points)
             price_element = inner_tree.xpath('//div[@class="fichatecnica"]//li[starts-with(., "Precio")]/text()')
             genero = inner_tree.xpath('//div[@class="mt1 tcenter t11"]/a/text()')
+            genero = ' '.join(genero)
+            print("Genero:",genero)
+
 
             if price_element:
                 price_text = price_element[0]
