@@ -4,6 +4,7 @@ import re
 import pandas as pd
 import os
 import subprocess
+import webbrowser 
 
 def get_data_url(url):
 
@@ -81,6 +82,11 @@ if __name__ == "__main__":
     if not os.path.exists(new_folder_path):
         os.makedirs(new_folder_path)
     csv_file_path = os.path.join(new_folder_path, "resultados.csv")
+
+    server_address = "http://127.0.0.1:8050/"
+    server_port = 8050
+    server_url = f"{server_address}:{server_port}"
+    webbrowser.open_new(server_url)
 
     df.to_csv(csv_file_path, sep="\t", encoding="utf-8-sig", index=False)
     # Llamar y ejecutar el script del dashboard
