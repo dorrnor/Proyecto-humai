@@ -64,6 +64,13 @@ def clean_price_text(price_text):
     price_text_cleaned = re.sub(r'[^\d.]', '', price_text_cleaned)
     return price_text_cleaned
 
+def enviar_mensaje():
+    bot_token = '6363521525:AAHU6ooDJmi-JLhDvgYxdjJdZclh_FyJxy4'
+    chat_id = '-966069482'  
+    message = "Los datos ya fueron scrappeados y se pueden visualizar en el siguente dashboard http://127.0.0.1:8050/"
+    requests.post('https://api.telegram.org/bot6363521525:AAHU6ooDJmi-JLhDvgYxdjJdZclh_FyJxy4/sendMessage',
+                  data={'chat_id':chat_id,'text':message})
+
 if __name__ == "__main__":
     url = "https://vandal.elespanol.com/analisis/videojuegos"
     df = get_data_url(url)
@@ -89,6 +96,9 @@ if __name__ == "__main__":
     webbrowser.open_new(server_url)
 
     df.to_csv(csv_file_path, sep="\t", encoding="utf-8-sig", index=False)
+
+    enviar_mensaje()
+
     # Llamar y ejecutar el script del dashboard
     print("Ejecutando dashboard.py... ")
     subprocess.run(["python", "dashboard.py"])
