@@ -26,6 +26,7 @@ def dashboardDiseño(app):
         ),
         dcc.Graph(id='price-bar-chart'),
         dcc.Graph(id='score-bar-chart'),
+        dcc.Graph(id='genre-bar-chart'),
         dcc.Graph(id='commentPositive-bar-chart'),
     ])
 
@@ -61,6 +62,16 @@ def callback(dashboard):
     def update_rating_bar_chart(selected_games):
         filtered_df = df[df['Titulo'].isin(selected_games)]
         fig = px.bar(filtered_df, x='Titulo', y='Puntaje', title='Puntaje de Videojuegos')
+        fig.update_xaxes(categoryorder='total descending')
+        return fig
+    
+    @dashboard.callback(
+        Output('genre-bar-chart', 'figure'),
+        [Input('dinamic-dropdown', 'value')]
+    )
+    def update_genre_bar_chart(selected_games):
+        filtered_df = df[df['Titulo'].isin(selected_games)]
+        fig = px.bar(filtered_df, x='Titulo', y='Genero', title='Genero de Videojuegos')
         fig.update_xaxes(categoryorder='total descending')
         return fig
     

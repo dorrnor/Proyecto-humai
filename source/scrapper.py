@@ -22,14 +22,10 @@ def get_data_url(url):
         if response.status_code == 200:
             inner_tree = html.fromstring(response.content)
             title = inner_tree.xpath('//div[@class="titulojuego"]/a/text()')[0]
-            #print("Título:", title)
             score = inner_tree.xpath('//*[@id="globalwrap"]/div[4]/article/div/div[3]/div/div[1]/div[1]/div[2]/text()')[0]
-            #print("Puntaje:", score)
             version = inner_tree.xpath('//div[1]/h3[@class="h3ficha"]/b/text()')[0]
-            #print("Ficha técnica de la versión:", version)
             analysis = inner_tree.xpath('//div[@class="textart"]//p/text()')
             analysis_text = ' '.join(analysis)
-            #print("Análisis:", analysis_text)
             Positive_points = inner_tree.xpath('//*[@id="globalwrap"]/div[4]/article/div/div[3]/div/div[2]/div/text()')
             negative_points = inner_tree.xpath('//*[@id="globalwrap"]/div[4]/article/div/div[3]/div/div[3]/div/text()')
             positive_count = len(Positive_points)
@@ -37,8 +33,6 @@ def get_data_url(url):
             price_element = inner_tree.xpath('//div[@class="fichatecnica"]//li[starts-with(., "Precio")]/text()')
             genero = inner_tree.xpath('//div[@class="mt1 tcenter t11"]/a/text()')
             genero = ' '.join(genero)
-            print("Genero:",genero)
-
 
             if price_element:
                 price_text = price_element[0]
@@ -80,7 +74,6 @@ if __name__ == "__main__":
 
     # Obtener la ruta del directorio abuelo (proyecto)
     project_directory = os.path.dirname(source_directory)
-    print(project_directory)
 
     folder_name = "datos"
     new_folder_path = os.path.join(project_directory, folder_name)
