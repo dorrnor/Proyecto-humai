@@ -1,4 +1,5 @@
 Proyecto de Scraping y Dashboard de Análisis de Videojuegos
+
 Este proyecto consta de dos scripts: uno para realizar el scraping de datos de análisis de videojuegos desde una página web y otro para crear un dashboard interactivo utilizando los datos recopilados. El proceso incluye recopilar los datos, guardarlos en un archivo CSV, notificar a través de un bot de Telegram y visualizarlos en un dashboard de análisis.
 
 Script de Scraping (get_data_url.py)
