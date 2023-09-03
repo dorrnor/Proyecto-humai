@@ -77,8 +77,8 @@ def clean_price_text(price_text):
 
 # Función para enviar un mensaje de notificación a través de Telegram
 def enviar_mensaje():
-    bot_token = 'your_bot_token_here'
-    chat_id = 'your_chat_id_here'  
+    bot_token = '6363521525:AAHU6ooDJmi-JLhDvgYxdjJdZclh_FyJxy4'
+    chat_id = '-966069482'  
     message = "Los datos ya fueron scrappeados y se pueden visualizar en el siguiente dashboard http://127.0.0.1:8050/"
     requests.post(f'https://api.telegram.org/bot{bot_token}/sendMessage',
                   data={'chat_id': chat_id, 'text': message})

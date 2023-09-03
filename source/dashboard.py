@@ -21,6 +21,18 @@ def dashboardDiseño(app):
         
         # Gráfico de barras para la recomendación
         dcc.Graph(id='recomendation-bar-chart'),
+        dcc.RangeSlider(
+         id='price-slider',
+         min=df['Precio'].min(),
+         max=df['Precio'].max(),
+         step=1,
+         marks={
+             0: {'label': f'${df["Precio"].min()}', 'style': {'transform': 'translateX(-50%)'}},
+             df['Precio'].max(): {'label': f'${df["Precio"].max()}'}
+         },
+         value=[df['Precio'].min(), df['Precio'].max()]
+        ),
+        html.Div(id='price-range-output'),
         
         # Dropdown dinámico para seleccionar juegos para otros gráficos
         dcc.Dropdown(
@@ -37,9 +49,6 @@ def dashboardDiseño(app):
         # Gráfico de barras para el puntaje
         dcc.Graph(id='score-bar-chart'),
         
-        # Gráfico de barras para el género
-        dcc.Graph(id='genre-bar-chart'),
-        
         # Gráfico de barras para los comentarios positivos y negativos
         dcc.Graph(id='commentPositive-bar-chart'),
     ])
@@ -50,20 +59,23 @@ def dashboardDiseño(app):
 def callback(dashboard):
     # Callback para actualizar el gráfico de recomendación
     @dashboard.callback(
-        Output('recomendation-bar-chart', 'figure'),
-        [Input('game-dropdown', 'value')]
+        [Output('recomendation-bar-chart', 'figure'),
+        Output('price-range-output', 'children')],
+        [Input('game-dropdown', 'value'),
+        Input('price-slider', 'value')]
     )
-    def update_recomendation_bar_chart(selected_games):
-        filtered_df = df[df['Titulo'].isin(selected_games)]
+    def update_recomendation_bar_chart(selected_games,price_range):
+        filtered_df = df[df['Titulo'].isin(selected_games) & (df['Precio'] >= price_range[0]) & (df['Precio'] <= price_range[1])]
         fig = px.bar(filtered_df, x='Titulo', y='Recomendacion', title='Recomendación de Videojuegos')
         fig.update_xaxes(categoryorder='total descending')
-        return fig
+        price_range_text = f'Rango de precios: ${price_range[0]} - ${price_range[1]}'
+        return fig, price_range_text
     
     # Callback para actualizar el gráfico de precio
     @dashboard.callback(
         Output('price-bar-chart', 'figure'),
-        [Input('dinamic-dropdown', 'value')]
-    )
+        Input('dinamic-dropdown', 'value'),
+        )
     def update_price_bar_chart(selected_games):
         filtered_df = df[df['Titulo'].isin(selected_games)]
         fig = px.bar(filtered_df, x='Titulo', y='Precio', title='Precio de Videojuegos')
@@ -81,16 +93,7 @@ def callback(dashboard):
         fig.update_xaxes(categoryorder='total descending')
         return fig
     
-    # Callback para actualizar el gráfico de género
-    @dashboard.callback(
-        Output('genre-bar-chart', 'figure'),
-        [Input('dinamic-dropdown', 'value')]
-    )
-    def update_genre_bar_chart(selected_games):
-        filtered_df = df[df['Titulo'].isin(selected_games)]
-        fig = px.bar(filtered_df, x='Titulo', y='Genero', title='Género de Videojuegos')
-        fig.update_xaxes(categoryorder='total descending')
-        return fig
+  
     
     # Callback para actualizar el gráfico de comentarios positivos y negativos
     @dashboard.callback(

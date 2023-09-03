@@ -53,3 +53,4 @@ plotly
 
 Instrucciones de Uso
 Ejecuta el script de scraping "python3 scrapper.py" en la ruta donde se encuentre el script para recopilar los datos de análisis de videojuegos desde la página web.
+Para entrar al grupo de telegram en donde el bot notificara que se scrappearon los datos correctamente, usar este link https://t.me/+mgIHX5tTleQ2OTNh
